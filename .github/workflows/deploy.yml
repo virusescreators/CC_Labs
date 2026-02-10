@@ -1,0 +1,109 @@
+name: Deploy Labs
+
+on:
+  workflow_dispatch:
+    inputs:
+      lab_number:
+        description: 'Lab Number to Deploy (e.g., 1, 2, ... 16)'
+        required: true
+        default: '1'
+        type: choice
+        options:
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+          - '10'
+          - '11'
+          - '12'
+          - '13'
+          - '14'
+          - '15'
+          - '16'
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+          - 'apply'
+          - 'destroy'
+          - 'plan'
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+
+jobs:
+  terraform:
+    name: "Terraform Lab ${{ github.event.inputs.lab_number }}"
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        shell: bash
+        # We assume the directory structure is labs/labXX
+        # We need to pad the lab number with a 0 if it's single digit for the folder name if that's the convention
+        # For now, let's assume folders are lab01, lab02... and handle the formatting
+        
+    steps:
+      - name: Checkout
+        uses: action/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Format Lab Directory Name
+        id: lab-dir
+        run: |
+          # Pad the lab number with a leading zero if it's less than 10
+          LAB_NUM=${{ github.event.inputs.lab_number }}
+          if [[ ${#LAB_NUM} -eq 1 ]]; then
+            LAB_DIR="lab0${LAB_NUM}"
+          else
+            LAB_DIR="lab${LAB_NUM}"
+          fi
+          echo "LAB_DIR=${LAB_DIR}" >> $GITHUB_ENV
+          echo "Determined lab directory: ${LAB_DIR}"
+
+      - name: Terraform Init
+        working-directory: params/
+        run: |
+          # We need to be in the specific lab directory
+          cd labs/$LAB_DIR
+          
+          terraform init \
+            -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}" \
+            -backend-config="key=labs/${LAB_DIR}/terraform.tfstate" \
+            -backend-config="region=us-east-1" \
+            -backend-config="dynamodb_table=${{ secrets.TF_LOCK_TABLE }}"
+
+      - name: Terraform Plan
+        if: ${{ github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply' }}
+        run: |
+          cd labs/$LAB_DIR
+          terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: |
+          cd labs/$LAB_DIR
+          terraform apply -auto-approve tfplan
+
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.action == 'destroy' }}
+        run: |
+          cd labs/$LAB_DIR
+          terraform destroy -auto-approve
