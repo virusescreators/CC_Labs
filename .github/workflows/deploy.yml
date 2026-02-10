@@ -79,7 +79,7 @@ jobs:
           echo "Determined lab directory: ${LAB_DIR}"
 
       - name: Terraform Init
-        working-directory: params/
+
         run: |
           # We need to be in the specific lab directory
           cd labs/$LAB_DIR
