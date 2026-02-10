@@ -5,22 +5,33 @@ This repository contains Terraform code for 16 Cloud Computing labs, deployable 
 ## Prerequisites
 
 1.  **AWS Account**: An AWS Free Tier account.
-2.  **Terraform**: Installed locally for bootstrapping.
-3.  **AWS CLI**: Configured with your root or admin credentials.
+2.  **AWS CloudShell**: You can run the bootstrap from the AWS Console > CloudShell.
+    -   *Note: If `terraform` is not installed in CloudShell, run:*
+        ```bash
+        sudo yum install -y yum-utils
+        sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+        sudo yum -y install terraform
+        ```
+3.  **AWS CLI**: Configured (pre-installed in CloudShell).
 
 ## One-Time Setup (Bootstrap)
 
-1.  Navigate to the `bootstrap` directory:
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/mr-haseen-ullah/CC_Labs.git
+    cd CC_Labs
+    ```
+2.  Navigate to the `bootstrap` directory:
     ```bash
     cd bootstrap
     terraform init
     terraform apply
     ```
-2.  Note the outputs:
+3.  Note the outputs:
     -   `s3_bucket_name`
     -   `dynamodb_table_name`
     -   `github_deployer_access_key_id`
-    -   `github_deployer_secret_access_key`
+    -   `github_deployer_secret_access_key` (Run `terraform output -json` to see values)
 
 ## GitHub Configuration
 
@@ -28,8 +39,8 @@ This repository contains Terraform code for 16 Cloud Computing labs, deployable 
 2.  Add the following **Repository Secrets**:
     -   `AWS_ACCESS_KEY_ID`: (From bootstrap output)
     -   `AWS_SECRET_ACCESS_KEY`: (From bootstrap output)
-    -   `TF_STATE_BUCKET`: (From bootstrap output, e.g., `cc-labs-terraform-state-xxxx`)
-    -   `TF_LOCK_TABLE`: (From bootstrap output, e.g., `cc-labs-terraform-lock`)
+    -   `TF_STATE_BUCKET`: (From bootstrap output)
+    -   `TF_LOCK_TABLE`: (From bootstrap output)
 
 ## Deploying a Lab
 
