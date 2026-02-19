@@ -21,7 +21,6 @@ resource "azuread_user" "student_user" {
   display_name        = "Student User"
   mail_nickname       = "student-user"
   password            = "P@ssw0rd1234!" # In real scenario, use random_password or requiring change
-  force_password_change_on_last_login = true
 }
 
 # Better UPN logic requires knowing the tenant domain.
