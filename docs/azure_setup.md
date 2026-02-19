@@ -69,10 +69,25 @@ Add the following secrets:
 
 ## Billing Alert Setup (Recommended)
 
-To avoid unexpected charges, you can set up a budget alert using the Azure CLI. Run this command in your terminal or Azure Cloud Shell:
+## Billing Alert Setup (Recommended)
+
+To avoid unexpected charges, you can set up a budget alert.
+
+**Option 1: Azure Portal (Easiest)**
+1.  Search for "Cost Management + Billing".
+2.  Select "Budgets" from the left menu.
+3.  Click "Add".
+4.  Name: `LabSafetyBudget`, Amount: `0.1`.
+5.  Set the alert email to `virusescreators@gmail.com`.
+
+**Option 2: Azure CLI**
+If the previous command failed, ensure you have the correct extension:
 
 ```bash
-# Set a budget of $0.10 with email alert
+# 1. Install/Update the extension
+az extension add --name costmanagement
+
+# 2. Create the budget
 START_DATE=$(date "+%Y-%m-01")
 END_DATE=$(date -d "+2 years" "+%Y-%m-01")
 
