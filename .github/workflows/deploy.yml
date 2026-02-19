@@ -25,6 +25,14 @@ on:
           - '14'
           - '15'
           - '16'
+      cloud_provider:
+        description: 'Cloud Provider'
+        required: true
+        default: 'aws'
+        type: choice
+        options:
+          - 'aws'
+          - 'azure'
       action:
         description: 'Action to perform'
         required: true
@@ -36,31 +44,39 @@ on:
           - 'plan'
 
 permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read  # This is required for actions/checkout
+  id-token: write # Required for requesting the JWT
+  contents: read  # Required for actions/checkout
 
 jobs:
   terraform:
-    name: "Terraform Lab ${{ github.event.inputs.lab_number }}"
+    name: "Terraform Lab ${{ github.event.inputs.lab_number }} (${{ github.event.inputs.cloud_provider }})"
     runs-on: ubuntu-latest
     
     defaults:
       run:
         shell: bash
-        # We assume the directory structure is labs/labXX
-        # We need to pad the lab number with a 0 if it's single digit for the folder name if that's the convention
-        # For now, let's assume folders are lab01, lab02... and handle the formatting
         
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Configure AWS Credentials
+        if: ${{ github.event.inputs.cloud_provider == 'aws' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Azure Login
+        if: ${{ github.event.inputs.cloud_provider == 'azure' }}
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          # If using Service Principal with Secret instead of OIDC, use:
+          # creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -75,35 +91,68 @@ jobs:
           else
             LAB_DIR="lab${LAB_NUM}"
           fi
-          echo "LAB_DIR=${LAB_DIR}" >> $GITHUB_ENV
-          echo "Determined lab directory: ${LAB_DIR}"
+          
+          # Append the cloud provider
+          CLOUD=${{ github.event.inputs.cloud_provider }}
+          FULL_DIR="labs/${LAB_DIR}/${CLOUD}"
+          
+          echo "FULL_DIR=${FULL_DIR}" >> $GITHUB_ENV
+          echo "Determined lab directory: ${FULL_DIR}"
 
       - name: Terraform Init
-
+        env: 
+          # Environment variables for Azure Backend (if using Azure Storage Account for state)
+          # For simplicity, we might reuse S3 for state or assume Azure Storage is configured via env vars
+          # Ideally, if cloud is Azure, we use Azure backend. If AWS, S3 backend.
+          # BUT, dynamic backend config is tricky. 
+          # HACK: For this lab, we will use the SAME S3 backend for both if possible, OR
+          # we assume the user has configured the backend block in the TF files to expect partial config.
+          # Since the original code used S3 backend passed via CLI, let's keep it but handle Azure case.
+          # FOR NOW: We will assume S3 backend for both (it's robust and works for holding state for Azure resources too).
+          # If the user wants Azure backend for Azure labs, we'd need more logic.
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
-          # We need to be in the specific lab directory
-          cd labs/$LAB_DIR
+          cd ${{ env.FULL_DIR }}
           
+          # Initialize with S3 backend for both
           terraform init \
             -backend-config="bucket=${{ secrets.TF_STATE_BUCKET }}" \
-            -backend-config="key=labs/${LAB_DIR}/terraform.tfstate" \
+            -backend-config="key=labs/${{ github.event.inputs.lab_number }}/${{ github.event.inputs.cloud_provider }}/terraform.tfstate" \
             -backend-config="region=us-east-1" \
             -backend-config="dynamodb_table=${{ secrets.TF_LOCK_TABLE }}"
 
       - name: Terraform Plan
         if: ${{ github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply' }}
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
-          cd labs/$LAB_DIR
+          cd ${{ env.FULL_DIR }}
           terraform plan -out=tfplan
 
       - name: Terraform Apply
         if: ${{ github.event.inputs.action == 'apply' }}
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
-          cd labs/$LAB_DIR
+          cd ${{ env.FULL_DIR }}
           terraform apply -auto-approve tfplan
 
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
-          cd labs/$LAB_DIR
+          cd ${{ env.FULL_DIR }}
           terraform destroy -auto-approve
