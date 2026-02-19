@@ -11,6 +11,9 @@ provider "azuread" {
   # Configuration via environment variables (ARM_CLIENT_ID, etc.)
 }
 
+# --- Data Source: Client Config ---
+data "azuread_client_config" "current" {}
+
 # --- Azure AD User: student-user ---
 # Note: Creating users requires User.ReadWrite.All permission
 resource "azuread_user" "student_user" {
