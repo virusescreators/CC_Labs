@@ -25,12 +25,18 @@ The GitHub Actions workflow uses an Azure Service Principal to authenticate.
     *Note: For Lab 01 (Azure AD User creation), you might need additional API permissions.*
     To grant Azure AD permissions:
     ```bash
-    # Get the SP ObjectId
-    SP_ID=$(az ad sp list --display-name "github-actions-lab-deployer" --query "[0].id" -o tsv)
+    # Get the Service Principal's App ID (Client ID)
+    SP_APP_ID=$(az ad sp list --display-name "github-actions-lab-deployer" --query "[0].appId" -o tsv)
 
-    # Graph API ID for User.ReadWrite.All (Example, consult MS Docs for exact UUIDs)
-    # This part is complex to script safely; easiest to do in Portal:
-    # Go to Entra ID -> App Registrations -> [Your App] -> API Permissions -> Add -> Microsoft Graph -> Application -> User.ReadWrite.All -> Grant Admin Consent
+    # Dictionary of Microsoft Graph API ID and User.ReadWrite.All Role ID
+    GRAPH_API_ID="00000003-0000-0000-c000-000000000000"
+    USER_READ_WRITE_ALL_ID="741f803b-c850-494e-b5df-cde7c675a1ca"
+
+    # 1. Add the permission to the App Registration
+    az ad app permission add --id $SP_APP_ID --api $GRAPH_API_ID --api-permissions $USER_READ_WRITE_ALL_ID=Role
+
+    # 2. Grant Admin Consent (Requires Admin privileges)
+    az ad app permission grant --id $SP_APP_ID --api $GRAPH_API_ID
     ```
 
 3.  **Save Output JSON**:
@@ -60,3 +66,22 @@ Add the following secrets:
 4.  Select the **Lab Number**.
 5.  Select the **Cloud Provider** (`azure` or `aws`).
 6.  Select the **Action** (`apply` or `destroy`).
+
+## Billing Alert Setup (Recommended)
+
+To avoid unexpected charges, you can set up a budget alert using the Azure CLI. Run this command in your terminal or Azure Cloud Shell:
+
+```bash
+# Set a budget of $0.10 with email alert
+START_DATE=$(date "+%Y-%m-01")
+END_DATE=$(date -d "+2 years" "+%Y-%m-01")
+
+az consumption budget create \
+  --budget-name "LabSafetyBudget" \
+  --amount 0.1 \
+  --time-grain monthly \
+  --category cost \
+  --start-date $START_DATE \
+  --end-date $END_DATE \
+  --contact-emails virusescreators@gmail.com
+```
