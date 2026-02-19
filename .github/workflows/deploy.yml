@@ -33,6 +33,10 @@ on:
         options:
           - 'aws'
           - 'azure'
+      azure_domain:
+        description: 'Azure Verified Domain (e.g., contoso.onmicrosoft.com) - Required for Lab 01 Azure'
+        required: false
+        default: ''
       action:
         description: 'Action to perform'
         required: true
@@ -127,6 +131,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          TF_VAR_azure_domain_name: ${{ github.event.inputs.azure_domain }}
         run: |
           cd ${{ env.FULL_DIR }}
           terraform plan -out=tfplan
@@ -138,6 +143,7 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          TF_VAR_azure_domain_name: ${{ github.event.inputs.azure_domain }}
         run: |
           cd ${{ env.FULL_DIR }}
           terraform apply -auto-approve tfplan
