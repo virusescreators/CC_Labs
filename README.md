@@ -51,8 +51,13 @@ This repository contains Terraform code for 16 Cloud Computing labs, deployable 
 5.  Select **Action**: `apply` (to deploy) or `destroy` (to clean up).
 6.  Click **Run workflow**.
 
-## Lab Details
+## Labs
 
-### Lab 1
-- Creates an IAM User `student-user`.
-- Sets up a Billing Alarm for > $0.01.
+Each lab has its own `README.md` with full details on AWS and Azure resources. Click a lab below to learn more.
+
+| Lab | Topic | Details |
+|-----|-------|---------|
+| [Lab 01](labs/lab01/) | IAM User & Billing Alarm | Create a cloud user and set up cost alerts |
+| [Lab 02](labs/lab02/) | Regions, AZs & Global Services | VPC, Subnet, S3, IAM Group |
+| [Lab 03](labs/lab03/) | S3, Volumes & Policies | S3 versioning, lifecycle rules, public access, EBS, EFS |
+| [Lab 04](labs/lab04/) | DynamoDB & DocumentDB | Tables, items, GSI, streams, DocumentDB cluster |
