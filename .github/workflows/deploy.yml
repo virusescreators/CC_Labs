@@ -61,6 +61,19 @@ jobs:
         shell: bash
         
     steps:
+      - name: Check Admin Permission
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PERMISSION=$(curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/collaborators/${{ github.actor }}/permission" \
+            | jq -r '.permission')
+          echo "User ${{ github.actor }} has permission: $PERMISSION"
+          if [[ "$PERMISSION" != "admin" ]]; then
+            echo "::error::Only repository admins can run this workflow. You have '$PERMISSION' permission."
+            exit 1
+          fi
+
       - name: Checkout
         uses: actions/checkout@v3
 
