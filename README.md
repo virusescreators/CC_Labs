@@ -1,6 +1,6 @@
 # AWS Cloud Computing Labs
 
-This repository contains Terraform code for 16 Cloud Computing labs, deployable via GitHub Actions.
+This repository contains Terraform code for 16 Cloud Computing labs, deployable via GitHub Actions
 
 ## Prerequisites
 
