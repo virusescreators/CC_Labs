@@ -61,3 +61,4 @@ Each lab has its own `README.md` with full details on AWS and Azure resources. C
 | [Lab 02](labs/lab02/) | Regions, AZs & Global Services | VPC, Subnet, S3, IAM Group |
 | [Lab 03](labs/lab03/) | S3, Volumes & Policies | S3 versioning, lifecycle rules, public access, EBS, EFS |
 | [Lab 04](labs/lab04/) | DynamoDB & DocumentDB | Tables, items, GSI, streams, DocumentDB cluster |
+| [Lab 05](labs/lab05/) | RDS & Aurora | RDS MySQL, parameter groups, snapshots, backups, read replicas |
