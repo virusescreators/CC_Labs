@@ -223,7 +223,7 @@ resource "aws_instance" "lab6_ec2" {
     <body>
         <div class="card">
             <h1>Haseen Ullah</h1>
-            <p class="reg">Registration # XXXX-XXXX</p>
+            <p class="reg">Registration # 22MDSWE238</p>
             <div class="info">
                 <p>Cloud Computing — Lab 6</p>
                 <p>Amazon EC2 Web Server</p>

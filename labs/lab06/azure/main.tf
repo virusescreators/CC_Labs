@@ -226,7 +226,7 @@ resource "azurerm_linux_virtual_machine" "lab6_vm" {
     <body>
         <div class="card">
             <h1>Haseen Ullah</h1>
-            <p class="reg">Registration # XXXX-XXXX</p>
+            <p class="reg">Registration # 22MDSWE238</p>
             <div class="info">
                 <p>Cloud Computing — Lab 6</p>
                 <p>Azure Virtual Machine Web Server</p>
