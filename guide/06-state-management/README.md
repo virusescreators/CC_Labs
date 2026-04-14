@@ -1,4 +1,4 @@
-# 07 — State Management
+# 06 — State Management
 
 ## What is Terraform State?
 
@@ -9,8 +9,6 @@ This file is how Terraform:
 - Detects drift (changes made outside Terraform)
 - Plans what needs to change on the next `apply`
 
----
-
 ## Local vs Remote State
 
 | | Local State | Remote State |
@@ -20,18 +18,18 @@ This file is how Terraform:
 | Locking | ❌ No | ✅ Prevents simultaneous changes |
 | Security | ❌ Risk of exposure | ✅ Encrypted at rest |
 
----
-
 ## Remote Backend Example (AWS S3 + DynamoDB)
+
+See [`backend.tf`](backend.tf) for the configuration.
 
 ### Setup Steps
 
-1. **Create an S3 bucket** for state:
+1. Create an S3 bucket for state:
 ```bash
 aws s3api create-bucket --bucket my-terraform-state-bucket --region us-east-1
 ```
 
-2. **Create a DynamoDB table** for state locking:
+2. Create a DynamoDB table for state locking:
 ```bash
 aws dynamodb create-table \
   --table-name terraform-state-lock \
@@ -40,23 +38,7 @@ aws dynamodb create-table \
   --billing-mode PAY_PER_REQUEST
 ```
 
-3. **Add backend configuration** and run `terraform init` again:
-
-```hcl
-terraform {
-  backend "s3" {
-    bucket         = "my-terraform-state-bucket"   # Your S3 bucket
-    key            = "global/terraform.tfstate"     # Path inside bucket
-    region         = "us-east-1"
-    encrypt        = true
-
-    # DynamoDB table for state locking
-    dynamodb_table = "terraform-state-lock"
-  }
-}
-```
-
----
+3. Add `backend.tf` to your project and run `terraform init` again.
 
 ## Important Rules
 
@@ -66,4 +48,5 @@ terraform {
 
 ---
 
-> Next: [Modules →](08-modules.md)
+> See [`notes.md`](notes.md) for extended notes.  
+> Next: [`07-modules/`](../07-modules/)

@@ -1,4 +1,4 @@
-# 10 — Resources & Further Reading
+# Resources & Further Reading
 
 ## Official Documentation
 
@@ -64,7 +64,3 @@
 | HashiCorp Discuss Forum | https://discuss.hashicorp.com |
 | Terraform GitHub | https://github.com/hashicorp/terraform |
 | r/Terraform Subreddit | https://www.reddit.com/r/Terraform |
-
----
-
-> Back to: [Guide Overview](README.md)

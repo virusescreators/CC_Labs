@@ -8,8 +8,6 @@ Think of it this way:
 - A developer writes **application code** to describe how software behaves.
 - An infrastructure engineer writes **infrastructure code** to describe how servers, networks, and databases are set up.
 
----
-
 ## Where Does Terraform Fit?
 
 There are several IaC tools available:
@@ -23,8 +21,6 @@ There are several IaC tools available:
 | Ansible | Red Hat | YAML | Multi-cloud (config mgmt focus) |
 
 Terraform is the **industry-standard** for multi-cloud IaC.
-
----
 
 ## How Terraform Works — The Big Picture
 
@@ -40,8 +36,6 @@ Cloud creates/updates/deletes infrastructure
 Terraform saves the result in a state file
 ```
 
----
-
 ## Key Terraform File Types
 
 | File | Purpose |
@@ -56,4 +50,5 @@ Terraform saves the result in a state file
 
 ---
 
-> Next: [Core Concepts →](02-core-concepts.md)
+> See [`notes.md`](notes.md) for extended notes.  
+> Next: [`02-core-concepts/`](../02-core-concepts/)

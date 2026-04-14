@@ -1,4 +1,4 @@
-# Terraform DevOps Teaching Module
+# Terraform DevOps Module
 
 **Course**: Cloud Computing  
 **Topic**: Infrastructure as Code with Terraform  
@@ -24,43 +24,29 @@ Instead of manually clicking through a cloud provider's console to create server
 
 ---
 
-## Module Contents
+## Module Outline
 
-This guide is split into focused chapters. Start from the top and work your way down.
-
-| # | File | Topic |
-|---|------|-------|
-| 01 | [Introduction](01-introduction.md) | What is Terraform, IaC overview, how it works |
-| 02 | [Core Concepts](02-core-concepts.md) | Providers, Resources, Variables, Outputs, State, Data Sources |
-| 03 | [Terraform Operations](03-terraform-operations.md) | init, plan, apply, destroy, and more |
-| 04 | [Commands Cheatsheet](04-commands-cheatsheet.md) | Quick-reference card for all Terraform CLI commands |
-| 05 | [Cloud Provider Setup](05-cloud-provider-setup.md) | Connecting Terraform to AWS, Azure, and GCP |
-| 06 | [Code Examples](06-code-examples.md) | Hands-on examples: EC2, S3, VPC, Multi-Resource |
-| 07 | [State Management](07-state-management.md) | Local vs Remote state, S3 backend, locking |
-| 08 | [Modules](08-modules.md) | Reusable Terraform modules, Terraform Registry |
-| 09 | [Lab Exercises](09-lab-exercises.md) | Step-by-step student labs (setup, S3, variables, full deploy) |
-| 10 | [Resources & Links](10-resources-and-links.md) | Official docs, tutorials, videos, tools, community |
+| Folder | Topic |
+|---|---|
+| [`01-introduction/`](01-introduction/) | What is Terraform, IaC overview |
+| [`02-core-concepts/`](02-core-concepts/) | Providers, Resources, Variables, State |
+| [`03-terraform-operations/`](03-terraform-operations/) | init, plan, apply, destroy and more |
+| [`04-connecting-to-cloud/`](04-connecting-to-cloud/) | AWS, Azure, GCP provider setup |
+| [`05-examples/`](05-examples/) | Hands-on Terraform code examples |
+| [`06-state-management/`](06-state-management/) | How Terraform tracks infrastructure |
+| [`07-modules/`](07-modules/) | Reusable Terraform modules |
+| [`08-lab-exercises/`](08-lab-exercises/) | Step-by-step student labs |
+| [`resources.md`](resources.md) | Official docs, tutorials, tools |
 
 ---
 
 ## Prerequisites
 
-- Basic understanding of cloud computing (AWS / Azure / GCP)
+- Basic understanding of cloud computing (AWS/Azure/GCP)
 - A terminal / command line environment
 - An active cloud account (AWS Free Tier recommended for labs)
-- Terraform installed — see [Lab 01](09-lab-exercises.md) for installation steps
+- Terraform installed — see [Lab 01](08-lab-exercises/lab-01-setup.md) for installation steps
 
 ---
 
-## Quick Start
-
-```
-1. Read the Introduction          →  01-introduction.md
-2. Learn Core Concepts            →  02-core-concepts.md
-3. Understand the CLI workflow    →  03-terraform-operations.md
-4. Set up your cloud provider     →  05-cloud-provider-setup.md
-5. Try the hands-on examples      →  06-code-examples.md
-6. Complete the lab exercises      →  09-lab-exercises.md
-```
-
-> ⚠️ Always run `terraform destroy` after each lab to avoid cloud billing charges.
+> Start with [`01-introduction/README.md`](01-introduction/)

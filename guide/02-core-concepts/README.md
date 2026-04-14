@@ -5,7 +5,6 @@
 A **provider** is a plugin that lets Terraform talk to a specific platform or service. Each provider exposes resources you can manage.
 
 ```hcl
-# Telling Terraform to use the AWS provider
 provider "aws" {
   region = "us-east-1"
 }
@@ -17,11 +16,9 @@ Common providers:
 - `hashicorp/google` — Google Cloud Platform
 - `hashicorp/kubernetes` — Kubernetes clusters
 
----
-
 ## 2. Resources
 
-A **resource** is the most important element in Terraform. It defines a single piece of infrastructure (a server, a database, a network, etc.).
+A **resource** is the most important element in Terraform. It defines a single piece of infrastructure.
 
 ```hcl
 resource "aws_instance" "my_server" {
@@ -36,8 +33,6 @@ resource "<PROVIDER_RESOURCE_TYPE>" "<LOCAL_NAME>" {
   argument = value
 }
 ```
-
----
 
 ## 3. Variables
 
@@ -57,8 +52,6 @@ resource "aws_instance" "server" {
 }
 ```
 
----
-
 ## 4. Outputs
 
 **Outputs** display useful values after Terraform runs (like an IP address or URL).
@@ -70,15 +63,11 @@ output "server_ip" {
 }
 ```
 
----
-
 ## 5. State
 
 Terraform keeps a **state file** (`terraform.tfstate`) to track what it has created. This is how Terraform knows what exists and what needs to change.
 
 > ⚠️ Never edit the state file manually. Use Terraform commands.
-
----
 
 ## 6. Data Sources
 
@@ -98,4 +87,5 @@ data "aws_ami" "ubuntu" {
 
 ---
 
-> Next: [Terraform Operations →](03-terraform-operations.md)
+> See [`notes.md`](notes.md) for extended notes.  
+> Next: [`03-terraform-operations/`](../03-terraform-operations/)

@@ -1,10 +1,4 @@
-# 04 — Terraform Commands Cheatsheet
-
-A quick-reference card for all essential Terraform CLI commands.
-
----
-
-## Core Workflow
+# Terraform Commands — Cheat Sheet
 
 | Command | Description |
 |---|---|
@@ -18,13 +12,6 @@ A quick-reference card for all essential Terraform CLI commands.
 | `terraform apply plan.tfplan` | Apply a saved plan |
 | `terraform destroy` | Destroy all managed infrastructure |
 | `terraform destroy -target=<resource>` | Destroy a specific resource |
-
----
-
-## Inspection & State
-
-| Command | Description |
-|---|---|
 | `terraform show` | Show current state |
 | `terraform state list` | List resources in state |
 | `terraform state show <resource>` | Show details of a resource in state |
@@ -32,13 +19,6 @@ A quick-reference card for all essential Terraform CLI commands.
 | `terraform import <resource> <id>` | Import existing resource into state |
 | `terraform refresh` | Sync state with real infrastructure |
 | `terraform graph` | Generate dependency graph (DOT format) |
-
----
-
-## Workspaces
-
-| Command | Description |
-|---|---|
 | `terraform workspace list` | List workspaces |
 | `terraform workspace new <name>` | Create new workspace |
 | `terraform workspace select <name>` | Switch workspace |
@@ -50,7 +30,3 @@ A quick-reference card for all essential Terraform CLI commands.
 ```
 init → validate → fmt → plan → apply → (manage) → destroy
 ```
-
----
-
-> Back to: [Terraform Operations](03-terraform-operations.md) · Next: [Cloud Provider Setup →](05-cloud-provider-setup.md)

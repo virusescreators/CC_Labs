@@ -23,8 +23,6 @@ Run this:
 - After adding a new provider
 - After changing backend configuration
 
----
-
 ## terraform validate
 
 **Purpose**: Checks your `.tf` files for syntax errors without connecting to any cloud.
@@ -33,8 +31,6 @@ Run this:
 terraform validate
 ```
 
----
-
 ## terraform fmt
 
 **Purpose**: Automatically formats your code to follow Terraform style conventions.
@@ -42,8 +38,6 @@ terraform validate
 ```bash
 terraform fmt
 ```
-
----
 
 ## terraform plan
 
@@ -64,8 +58,6 @@ Save a plan to a file:
 terraform plan -out=myplan.tfplan
 ```
 
----
-
 ## terraform apply
 
 **Purpose**: Executes the plan and creates/updates/destroys infrastructure on the cloud.
@@ -84,8 +76,6 @@ Auto-approve (skip yes/no prompt):
 terraform apply -auto-approve
 ```
 
----
-
 ## terraform destroy
 
 **Purpose**: Destroys ALL infrastructure managed by the current Terraform configuration.
@@ -101,8 +91,6 @@ terraform destroy -target=aws_instance.my_server
 
 > ⚠️ This deletes real infrastructure. Always double-check before confirming.
 
----
-
 ## terraform show
 
 **Purpose**: Displays the current state or a saved plan in a human-readable format.
@@ -111,8 +99,6 @@ terraform destroy -target=aws_instance.my_server
 terraform show
 terraform show myplan.tfplan
 ```
-
----
 
 ## terraform state
 
@@ -124,8 +110,6 @@ terraform state show aws_instance.server     # Show details of one resource
 terraform state rm aws_instance.server       # Remove resource from state (without destroying it)
 ```
 
----
-
 ## terraform output
 
 **Purpose**: Print output values from the state.
@@ -134,8 +118,6 @@ terraform state rm aws_instance.server       # Remove resource from state (witho
 terraform output
 terraform output server_ip
 ```
-
----
 
 ## terraform import
 
@@ -147,4 +129,6 @@ terraform import aws_instance.server i-1234567890abcdef0
 
 ---
 
-> See also: [Commands Cheatsheet →](04-commands-cheatsheet.md)
+> See [`commands-cheatsheet.md`](commands-cheatsheet.md) for a quick reference card.  
+> See [`notes.md`](notes.md) for extended notes.  
+> Next: [`04-connecting-to-cloud/`](../04-connecting-to-cloud/)
