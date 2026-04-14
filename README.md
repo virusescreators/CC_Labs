@@ -64,3 +64,4 @@ Each lab has its own `README.md` with full details on AWS and Azure resources. C
 | [Lab 05](labs/lab05/) | RDS & Aurora | RDS MySQL, parameter groups, snapshots, backups, read replicas |
 | [Lab 06](labs/lab06/) | EC2 & Virtual Machines | Launch EC2/Azure VM, SSH access, web server setup |
 | [Lab 07](labs/lab07/) | Networking | VPC, VNet, Subnets, Internet Gateways, Route Tables |
+| [Lab 08](labs/lab08/) | EC2 in VPC Subnets | Launch EC2/VM in public & private subnets, bastion host access |
