@@ -65,3 +65,4 @@ Each lab has its own `README.md` with full details on AWS and Azure resources. C
 | [Lab 06](labs/lab06/) | EC2 & Virtual Machines | Launch EC2/Azure VM, SSH access, web server setup |
 | [Lab 07](labs/lab07/) | Networking | VPC, VNet, Subnets, Internet Gateways, Route Tables |
 | [Lab 08](labs/lab08/) | EC2 in VPC Subnets | Launch EC2/VM in public & private subnets, bastion host access |
+| [Lab 09](labs/lab09/) | Load Balancers | Deploy Application/Standard Load Balancers with target groups |
