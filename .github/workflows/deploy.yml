@@ -138,11 +138,16 @@ jobs:
               -backend-config="region=us-east-1" \
               -backend-config="dynamodb_table=${{ secrets.TF_LOCK_TABLE }}"
           else
+            if [ -z "${{ secrets.TF_STATE_RG }}" ]; then
+              echo "::error::GitHub Secret TF_STATE_RG is empty or missing! Please add it in Settings > Secrets."
+              exit 1
+            fi
             terraform init \
               -backend-config="resource_group_name=${{ secrets.TF_STATE_RG }}" \
               -backend-config="storage_account_name=${{ secrets.TF_STATE_SA }}" \
               -backend-config="container_name=${{ secrets.TF_STATE_CONTAINER }}" \
-              -backend-config="key=labs/${{ github.event.inputs.lab_number }}/azure/terraform.tfstate"
+              -backend-config="key=labs/${{ github.event.inputs.lab_number }}/azure/terraform.tfstate" \
+              -backend-config="use_azuread_auth=true"
           fi
 
       - name: Terraform Plan
