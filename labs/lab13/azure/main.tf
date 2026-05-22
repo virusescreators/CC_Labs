@@ -1,11 +1,9 @@
 terraform {
-  # Uncomment and configure this block if you want to store state in Azure Blob Storage
-  # backend "azurerm" {
-  #   resource_group_name  = "YOUR_TF_STATE_RG"
-  #   storage_account_name = "YOUR_TF_STATE_SA"
-  #   container_name       = "YOUR_TF_STATE_CONTAINER"
-  #   key                  = "lab13/terraform.tfstate"
-  # }
+  backend "s3" {
+    bucket         = "tfstate-haseen-22mdswe238"
+    key            = "lab13/azure/terraform.tfstate"
+    region         = "us-east-1"
+  }
 
   required_providers {
     azurerm = {
