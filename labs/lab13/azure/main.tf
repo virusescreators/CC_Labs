@@ -29,7 +29,7 @@ resource "random_id" "suffix" {
 
 resource "azurerm_resource_group" "lab13_rg" {
   name     = "Lab13-CD-RG-${random_id.suffix.hex}"
-  location = "East US 2"
+  location = "Central US"
 }
 
 # ─── App Service Plan ─────────────────────────────────────────────────────────
