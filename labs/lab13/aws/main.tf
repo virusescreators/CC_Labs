@@ -365,7 +365,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 
 resource "aws_instance" "lab13_ec2" {
   ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t2.micro"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.lab13_subnet.id
   vpc_security_group_ids = [aws_security_group.lab13_sg.id]
   key_name               = aws_key_pair.lab13_keypair.key_name
