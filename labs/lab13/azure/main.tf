@@ -29,7 +29,7 @@ resource "random_id" "suffix" {
 
 resource "azurerm_resource_group" "lab13_rg" {
   name     = "Lab13-CD-RG-${random_id.suffix.hex}"
-  location = "East US"
+  location = "East US 2"
 }
 
 # ─── App Service Plan ─────────────────────────────────────────────────────────
@@ -39,7 +39,7 @@ resource "azurerm_service_plan" "lab13_plan" {
   resource_group_name = azurerm_resource_group.lab13_rg.name
   location            = azurerm_resource_group.lab13_rg.location
   os_type             = "Linux"
-  sku_name            = "B1" # Standard cost-efficient B1 tier
+  sku_name            = "S1" # Standard S1 tier (supports deployment slots for staging)
 }
 
 # ─── Linux Web App (Production) ───────────────────────────────────────────────
