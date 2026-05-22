@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "CodeBuild: Starting installation phase..."
+  pre_build:
+    commands:
+      - echo "CodeBuild: Ready to bundle files..."
+  build:
+    commands:
+      - echo "CodeBuild: Performing build and preparation..."
+  post_build:
+    commands:
+      - echo "CodeBuild: Finished preparation. Generating artifacts..."
+
+artifacts:
+  files:
+    - index.html
+    - appspec.yml
+    - scripts/**/*
