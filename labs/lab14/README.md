@@ -133,3 +133,29 @@ Once the workflow finishes successfully, it will output the public IP of the dep
 > 2. Automatically install the monitoring agent on the instance.
 > 3. Implement a log-generator background service producing periodic custom logs.
 > 4. Stream system-level metrics (CPU, Memory, Disk) and custom log heartbeats directly to your cloud observability suite (**CloudWatch Logs / Log Analytics**).
+
+---
+
+## **6. Verification Proof (Active Student Deployments)**
+
+Below are the actual demonstration screenshots confirming the successful automated deployment and verification of Lab 14:
+
+### **Proof 1: Successful GitHub Actions Terraform Ingress & Deployment Outputs**
+This screenshot proves that the GitHub Actions deploy runner successfully executed `terraform apply`, provisioned the entire AWS observability stack, opened HTTP Port 80, and exported the public IP credentials:
+
+![GitHub Actions Deployment Outputs](media/Screenshot%202026-06-01%20151549.png)
+
+---
+
+### **Proof 2: Active Browser Status Verification Page**
+This screenshot demonstrates successful public access to the EC2 instance via the deployed public IP address. The landing page verifies Nginx/Apache is active, the log-generator is producing statistics, and the CloudWatch agent is actively connected:
+
+![Validation Status Webpage](media/Screenshot%202026-06-01%20151844.png)
+
+---
+
+### **Proof 3: Active Live Log Streams Ingested in CloudWatch Console**
+This screenshot shows the final, live ingestion inside the AWS CloudWatch Console, demonstrating that time-series log heartbeats are successfully streaming under the `lab14-ec2-custom-logs` log group:
+
+![AWS CloudWatch Ingested Log Streams](media/Screenshot%202026-06-01%20151901.png)
+
