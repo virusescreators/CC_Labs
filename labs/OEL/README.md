@@ -172,3 +172,16 @@ This screenshot confirms that your S3 assets are securely uploaded and your Load
 
 ![S3 Ingestion & ALB Status](media/Screenshot%202026-06-01%20154222.png)
 
+---
+
+### **Proof 7: Decoupled Resume Download Verification (`resume.txt`)**
+This text block displays the raw contents of the successfully downloaded CV/Resume file (`resume.txt`) retrieved directly from your S3 bucket endpoint, confirming content accuracy and end-to-end download success:
+
+```text
+Haseen Ullah (22MDSWE238) - Professional CV / Resume
+Course: SE-409L Cloud Computing Lab
+Email: haseen.ullah@student.example.com
+Skills: AWS Architecture, Terraform, Azure Administrator, DevOps, CI/CD Pipelines.
+```
+
+

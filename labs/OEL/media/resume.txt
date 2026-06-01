@@ -1,0 +1,4 @@
+Haseen Ullah (22MDSWE238) - Professional CV / Resume
+Course: SE-409L Cloud Computing Lab
+Email: haseen.ullah@student.example.com
+Skills: AWS Architecture, Terraform, Azure Administrator, DevOps, CI/CD Pipelines.
