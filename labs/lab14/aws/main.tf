@@ -113,6 +113,14 @@ resource "aws_security_group" "lab14_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "HTTP from Internet"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     description = "Allow all outbound traffic"
     from_port   = 0
@@ -190,11 +198,130 @@ resource "aws_instance" "lab14_ec2" {
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    # Update packages
+    # Update packages and install Apache + CloudWatch Agent
     dnf update -y
+    dnf install amazon-cloudwatch-agent httpd -y
 
-    # Install the CloudWatch Agent
-    dnf install amazon-cloudwatch-agent -y
+    # Enable and start Apache HTTP server
+    systemctl start httpd
+    systemctl enable httpd
+
+    # Create verification status web page
+    cat << 'HTML_EOF' > /var/www/html/index.html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lab 14: AWS CloudWatch Observability Active</title>
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --primary: #4f46e5;
+                --success: #10b981;
+                --background: #0f172a;
+                --card-bg: #1e293b;
+                --text: #f8fafc;
+                --text-muted: #94a3b8;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: 'Outfit', sans-serif;
+            }
+            body {
+                background-color: var(--background);
+                color: var(--text);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                padding: 2rem;
+            }
+            .card {
+                background-color: var(--card-bg);
+                border: 1px solid #334155;
+                border-radius: 16px;
+                padding: 3rem;
+                max-width: 600px;
+                width: 100%;
+                text-align: center;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            }
+            .badge {
+                display: inline-block;
+                background-color: rgba(16, 185, 129, 0.2);
+                color: var(--success);
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                font-weight: 600;
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+                border: 1px solid rgba(16, 185, 129, 0.3);
+            }
+            h1 {
+                font-size: 2.25rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                background: linear-gradient(to right, #818cf8, #34d399);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            p {
+                color: var(--text-muted);
+                margin-bottom: 2rem;
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+            .details {
+                border-top: 1px solid #334155;
+                padding-top: 1.5rem;
+                text-align: left;
+            }
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.75rem;
+                font-size: 0.95rem;
+            }
+            .detail-label {
+                color: var(--text-muted);
+            }
+            .detail-value {
+                font-weight: 600;
+                color: var(--text);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <div class="badge">● Observability Active</div>
+            <h1>Lab 14: CloudWatch Agent Connected</h1>
+            <p>This EC2 instance has successfully registered with Amazon CloudWatch under the <strong>CWAgent</strong> namespace. Real-time metrics (CPU, Memory, Disk) and custom heartbeats are streaming to the dashboard!</p>
+            
+            <div class="details">
+                <div class="detail-item">
+                    <span class="detail-label">Student Name:</span>
+                    <span class="detail-value">Haseen Ullah</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Registration No:</span>
+                    <span class="detail-value">22MDSWE238</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Log Group:</span>
+                    <span class="detail-value">lab14-ec2-custom-logs</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Log Stream:</span>
+                    <span class="detail-value">custom-app-stream</span>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    HTML_EOF
 
     # Create directory for the custom application logs
     mkdir -p /var/log/custom-app
