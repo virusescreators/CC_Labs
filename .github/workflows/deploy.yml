@@ -25,6 +25,7 @@ on:
           - '14'
           - '15'
           - '16'
+          - 'OEL'
       cloud_provider:
         description: 'Cloud Provider'
         required: true
@@ -100,9 +101,10 @@ jobs:
       - name: Format Lab Directory Name
         id: lab-dir
         run: |
-          # Pad the lab number with a leading zero if it's less than 10
           LAB_NUM=${{ github.event.inputs.lab_number }}
-          if [[ ${#LAB_NUM} -eq 1 ]]; then
+          if [[ "$LAB_NUM" == "OEL" ]]; then
+            LAB_DIR="OEL"
+          elif [[ ${#LAB_NUM} -eq 1 ]]; then
             LAB_DIR="lab0${LAB_NUM}"
           else
             LAB_DIR="lab${LAB_NUM}"
