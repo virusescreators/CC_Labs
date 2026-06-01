@@ -62,7 +62,7 @@ resource "azurerm_storage_blob" "resume" {
   storage_container_name = azurerm_storage_container.assets_container.name
   type                   = "Block"
   source_content         = "Haseen Ullah (22MDSWE238) - Professional CV / Resume\nCourse: SE-409L Cloud Computing Lab\nEmail: haseen.ullah@student.example.com\nSkills: Azure Administration, Terraform, AWS DevOps, CI/CD, Linux Systems."
-  content_type           = "application/pdf"
+  content_type           = "text/plain"
 }
 
 resource "azurerm_storage_blob" "project_doc" {

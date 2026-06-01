@@ -196,7 +196,7 @@ resource "aws_s3_object" "resume" {
   bucket       = aws_s3_bucket.portfolio_bucket.id
   key          = "assets/resume.pdf"
   content      = "Haseen Ullah (22MDSWE238) - Professional CV / Resume\nCourse: SE-409L Cloud Computing Lab\nEmail: haseen.ullah@student.example.com\nSkills: AWS Architecture, Terraform, Azure Administrator, DevOps, CI/CD Pipelines."
-  content_type = "application/pdf"
+  content_type = "text/plain"
 }
 
 resource "aws_s3_object" "project_doc" {
