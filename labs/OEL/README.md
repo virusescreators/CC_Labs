@@ -125,3 +125,50 @@ This lab's infrastructure is fully defined in Terraform. The Dynamic GitHub Acti
 5. Choose your target **Cloud Provider** (`aws` or `azure`).
 6. Select **Action to perform** as `apply` and run the workflow.
 7. The actions logs will output the **ALB DNS / Load Balancer IP** to access your public personal portfolio!
+
+---
+
+## **4. Open-Ended Lab Demonstration Proof**
+
+Below are the verification screenshots confirming the successful multi-cloud automated deployment, asset ingestion, and performance monitoring of your personal portfolio:
+
+### **Proof 1: Beautiful Personal Portfolio Web Application**
+This screenshot proves successful public access to your personal portfolio website through the **Application Load Balancer (ALB)** DNS. It showcases the responsive student header and the interactive project card interface:
+
+![Active Portfolio Website Access](media/Screenshot%202026-06-01%20154510.png)
+
+---
+
+### **Proof 2: Verified Cloud Storage Assets in S3 Bucket**
+This screenshot verifies that static resume and documentation assets are decoupled and hosted securely inside your public S3 bucket (`oel-portfolio-bucket-*`):
+
+![Cloud Storage Assets inside S3](media/Screenshot%202026-06-01%20154526.png)
+
+---
+
+### **Proof 3: Active Multi-AZ Scaling EC2 Instances**
+This screenshot displays the active EC2 instances automatically provisioned by the Auto Scaling Group across different Availability Zones to support high availability:
+
+![Multi-AZ EC2 Instances](media/Screenshot%202026-06-01%20154541.png)
+
+---
+
+### **Proof 4: Auto Scaling Group State & Parameters**
+This screenshot displays your Auto Scaling Group `oel-portfolio-asg-*` running inside the AWS Console, showing the desired capacity of 2 and target health statuses:
+
+![Auto Scaling Group Parameters](media/Screenshot%202026-06-01%20154552.png)
+
+---
+
+### **Proof 5: CloudWatch Custom Dashboard & Metric Graph**
+This screenshot displays the custom operational dashboard `HaseenUllah-OEL-Dashboard-*` actively graphing CPU utilization metric telemetry from the Scaling Group:
+
+![CloudWatch Dashboard CPU Tracking](media/Screenshot%202026-06-01%20154600.png)
+
+---
+
+### **Proof 6: Ingested S3 Assets & ALB Status**
+This screenshot confirms that your S3 assets are securely uploaded and your Load Balancer has successfully registered the health checks of all target instances:
+
+![S3 Ingestion & ALB Status](media/Screenshot%202026-06-01%20154222.png)
+
