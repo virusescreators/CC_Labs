@@ -1,6 +1,6 @@
 # AWS Cloud Computing Labs
 
-This repository contains Terraform code for 16 Cloud Computing labs, deployable via GitHub Actions
+This repository contains Terraform code for 14 Cloud Computing labs and an Open-Ended Lab (OEL), deployable via GitHub Actions
 
 ## Prerequisites
 
@@ -68,3 +68,7 @@ Each lab has its own `README.md` with full details on AWS and Azure resources. C
 | [Lab 09](labs/lab09/) | Load Balancers | Deploy Application/Standard Load Balancers with target groups |
 | [Lab 10](labs/lab10/) | Auto Scaling Groups | Deploy Auto Scaling Group (AWS) / VMSS (Azure) with Load Balancers |
 | [Lab 11](labs/lab11/) | ALB Path-Based Routing | Route traffic to separate ASGs via URL paths (/app, /api) using ALB / Application Gateway |
+| [Lab 12](labs/lab12/) | AWS Deployment Services | Deploy web applications using Lightsail, Fargate, Elastic Beanstalk, Amplify, and SageMaker |
+| [Lab 13](labs/lab13/) | CI/CD with AWS | Automate deployments using CodePipeline, CodeBuild, and CodeDeploy to EC2 with Nginx |
+| [Lab 14](labs/lab14/) | Cloud Monitoring & Observability | Monitor VM telemetry and logs using Amazon CloudWatch & Azure Monitor (AMA/DCR) |
+| [OEL](labs/OEL/) | Scalable Personal Portfolio | Deploy a scalable, highly available portfolio website on AWS & Azure using ALB, ASG/VMSS, and S3/Blob Storage |
