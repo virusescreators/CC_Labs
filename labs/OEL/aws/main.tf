@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "tfstate-haseen-22mdswe238"
+    bucket         = "tfstate-shared"
     key            = "OEL/terraform.tfstate"
     region         = "us-east-1"
   }
